@@ -7,28 +7,309 @@
   <meta name="description" content="Curriculum Vitae of Harsh Patel — Graphic Designer & Social Media Specialist based in London, UK." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="behance.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── VARIABLES ── */
+    :root {
+      --bg:           #0a0a0a;
+      --bg-2:         #111111;
+      --bg-3:         #181818;
+      --surface:      #1a1a1a;
+      --border:       rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --fg:           #f0ede8;
+      --fg-2:         #999;
+      --fg-3:         #555;
+      --accent:       #e8d5b0;
+      --accent-2:     #c9a96e;
+      --accent-glow:  rgba(201,169,110,0.15);
+      --nav-h:        68px;
+      --ease:         cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      height: 100%; display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      padding: 6px 14px; border-radius: 6px;
+      font-size: 0.875rem; color: var(--fg-2);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--fg); background: rgba(255,255,255,0.06); }
+    .btn-nav {
+      padding: 8px 18px; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      background: var(--accent-2); color: #0a0a0a;
+      transition: opacity 0.2s;
+    }
+    .btn-nav:hover { opacity: 0.85; }
+    .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-burger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--fg); margin: 5px 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-drawer {
+      display: none; position: fixed; inset: var(--nav-h) 0 0 0;
+      background: var(--bg-2); padding: 2rem;
+      z-index: 99;
+    }
+    .nav-drawer.open { display: block; }
+    .nav-drawer li { margin-bottom: 1.2rem; }
+    .nav-drawer a { font-size: 1.25rem; color: var(--fg-2); }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+
+    /* ── CV PAGE ── */
+    .cv-page { padding-top: calc(var(--nav-h) + 4rem); padding-bottom: 6rem; }
+
+    /* ── CV HERO ── */
+    .cv-hero {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3rem; margin-bottom: 3.5rem;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent-2);
+      margin-bottom: 1rem;
+    }
+    .cv-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+    .cv-title {
+      font-size: 1rem; color: var(--fg-2);
+      margin-bottom: 0.35rem;
+    }
+    .cv-location {
+      font-size: 0.875rem; color: var(--fg-3);
+      margin-bottom: 2rem;
+    }
+    .cv-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .btn-gold {
+      background: var(--accent-2); color: #0a0a0a;
+    }
+    .btn-gold:hover { background: var(--accent); }
+    .btn-outline {
+      border: 1px solid var(--border-hover); color: var(--fg);
+      background: transparent;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.06); }
+    .btn-ghost { color: var(--fg-2); }
+    .btn-ghost:hover { color: var(--fg); }
+
+    /* ── LAYOUT ── */
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* ── BLOCKS ── */
+    .cv-block { margin-bottom: 2.5rem; }
+    .cv-section-title {
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent-2);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── CONTACT LIST ── */
+    .cv-contact-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .cv-contact-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.875rem; color: var(--fg-2);
+    }
+    .cv-icon { color: var(--accent-2); font-size: 0.9rem; flex-shrink: 0; }
+    .cv-contact-list a { color: var(--fg-2); transition: color 0.2s; }
+    .cv-contact-list a:hover { color: var(--accent); }
+
+    /* ── SKILLS / BARS ── */
+    .cv-skills { display: flex; flex-direction: column; gap: 1rem; }
+    .cv-skill-head {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; margin-bottom: 5px;
+      color: var(--fg);
+    }
+    .cv-skill-head span:last-child { color: var(--fg-3); font-size: 0.75rem; }
+    .cv-bar {
+      height: 3px; background: rgba(255,255,255,0.07);
+      border-radius: 99px; overflow: hidden;
+    }
+    .cv-bar-fill {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      border-radius: 99px;
+      transition: width 1s var(--ease);
+    }
+
+    /* ── TAGS ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      padding: 4px 12px; border-radius: 99px;
+      font-size: 0.75rem; color: var(--fg-2);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* ── TIMELINE ── */
+    .cv-timeline { display: flex; flex-direction: column; gap: 2.5rem; }
+    .cv-entry { position: relative; padding-left: 1rem; border-left: 1px solid var(--border); }
+    .cv-entry::before {
+      content: ''; position: absolute; left: -4px; top: 6px;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent-2);
+    }
+    .cv-entry-head { margin-bottom: 0.9rem; }
+    .cv-date {
+      display: block;
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      color: var(--accent-2); text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .cv-entry-head h4 {
+      font-size: 1rem; font-weight: 600; color: var(--fg);
+      margin-bottom: 0.2rem;
+    }
+    .cv-company { font-size: 0.82rem; color: var(--fg-3); }
+    .cv-list { display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1rem; }
+    .cv-list li {
+      font-size: 0.875rem; color: var(--fg-2); line-height: 1.65;
+      position: relative; list-style: disc;
+    }
+    .cv-list li::marker { color: var(--accent-2); }
+
+    /* ── PROFILE TEXT ── */
+    .cv-body {
+      font-size: 0.9rem; color: var(--fg-2);
+      line-height: 1.8;
+    }
+
+    /* ── CERTS ── */
+    .cv-certs { display: flex; flex-direction: column; gap: 1rem; }
+    .cv-cert {
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      padding: 1rem; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .cv-cert-year {
+      font-size: 0.72rem; color: var(--accent-2);
+      font-weight: 600; letter-spacing: 0.08em;
+      padding-top: 2px; flex-shrink: 0;
+    }
+    .cv-cert h4 { font-size: 0.875rem; font-weight: 500; margin-bottom: 2px; }
+    .cv-cert p { font-size: 0.78rem; color: var(--fg-3); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      margin-top: 4rem;
+      background: var(--bg-2);
+    }
+    .footer-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+    }
+    .footer-nav { display: flex; gap: 1.5rem; }
+    .footer-nav a { font-size: 0.875rem; color: var(--fg-3); transition: color 0.2s; }
+    .footer-nav a:hover { color: var(--accent); }
+    .footer-copy { font-size: 0.8rem; color: var(--fg-3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cv-layout { grid-template-columns: 1fr; gap: 0; }
+      .nav-links, .btn-nav { display: none; }
+      .nav-burger { display: block; }
+      .container { padding: 0 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .cv-name { font-size: 2.4rem; }
+      .cv-actions { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="nav scrolled" id="nav">
+  <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="behance.html" class="logo">HP</a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="behance.html#about">About</a></li>
-        <li><a href="behance.html#work">Work</a></li>
-        <li><a href="behance.html#contact">Contact</a></li>
+      <a href="index.html" class="logo">HP</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
       </ul>
-      <a href="behance.html#contact" class="btn-nav">Let's Talk →</a>
-      <button class="nav-burger" id="navBurger" aria-label="Toggle menu"><span></span><span></span></button>
+      <a href="index.html#contact" class="btn-nav">Let's Talk →</a>
+      <button class="nav-burger" id="navBurger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
     <div class="nav-drawer" id="navDrawer">
       <ul>
-        <li><a href="behance.html#about" class="drawer-link">About</a></li>
-        <li><a href="behance.html#work" class="drawer-link">Work</a></li>
-        <li><a href="behance.html#contact" class="drawer-link">Contact</a></li>
+        <li><a href="index.html#about" class="drawer-link">About</a></li>
+        <li><a href="index.html#work" class="drawer-link">Work</a></li>
+        <li><a href="index.html#contact" class="drawer-link">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -44,14 +325,12 @@
         <p class="cv-title">Graphic Designer · Social Media Specialist · Creative Strategist</p>
         <p class="cv-location">London, United Kingdom</p>
         <div class="cv-actions">
-          <a href="Harsh_Patel_CV.pdf" target="_blank" class="btn btn-gold" id="downloadCvBtn" download>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <a href="Harsh_Patel_CV.pdf" target="_blank" class="btn btn-gold" download>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download PDF CV
           </a>
-          <a href="#" class="btn btn-outline" onclick="window.print(); return false;" id="printCvBtn">
-            Print CV
-          </a>
-          <a href="behance.html#contact" class="btn btn-ghost">Get in Touch →</a>
+          <a href="#" class="btn btn-outline" onclick="window.print(); return false;">Print CV</a>
+          <a href="index.html#contact" class="btn btn-ghost">Get in Touch →</a>
         </div>
       </div>
 
@@ -74,60 +353,24 @@
           <div class="cv-block reveal">
             <h3 class="cv-section-title">Design Tools</h3>
             <div class="cv-skills">
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Adobe Photoshop</span><span>95%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:95%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Adobe Illustrator</span><span>90%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:90%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Adobe InDesign</span><span>85%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Adobe After Effects</span><span>85%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Adobe Premiere Pro</span><span>80%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:80%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Adobe Firefly</span><span>90%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:90%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Canva Pro</span><span>98%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:98%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Figma</span><span>85%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>Wix Studio &amp; WordPress</span><span>85%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>HTML/CSS Design</span><span>80%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:80%"></div></div>
-              </div>
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>CorelDRAW</span><span>80%</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:80%"></div></div>
-              </div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Adobe Photoshop</span><span>95%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:95%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Adobe Illustrator</span><span>90%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:90%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Adobe InDesign</span><span>85%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Adobe After Effects</span><span>85%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Adobe Premiere Pro</span><span>80%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:80%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Adobe Firefly</span><span>90%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:90%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Canva Pro</span><span>98%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:98%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Figma</span><span>85%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>Wix Studio &amp; WordPress</span><span>85%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:85%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>HTML/CSS Design</span><span>80%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:80%"></div></div></div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>CorelDRAW</span><span>80%</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:80%"></div></div></div>
             </div>
           </div>
 
           <div class="cv-block reveal">
             <h3 class="cv-section-title">Languages</h3>
             <div class="cv-skills">
-              <div class="cv-skill">
-                <div class="cv-skill-head"><span>English</span><span>Fluent</span></div>
-                <div class="cv-bar"><div class="cv-bar-fill" style="--w:95%"></div></div>
-              </div>
+              <div class="cv-skill"><div class="cv-skill-head"><span>English</span><span>Fluent</span></div><div class="cv-bar"><div class="cv-bar-fill" style="--w:95%"></div></div></div>
             </div>
           </div>
 
@@ -149,13 +392,11 @@
         <!-- Main Content -->
         <div class="cv-main">
 
-          <!-- Profile -->
           <div class="cv-block reveal">
             <h3 class="cv-section-title">Professional Profile</h3>
             <p class="cv-body">Versatile Graphic Designer with 4 years of in-house agency and freelance experience delivering brand identities, UI/UX designs, digital campaigns, motion graphics, and web-ready assets across beauty, fashion, hospitality, and digital sectors. Proficient across Adobe Creative Suite, Figma, Sketch, InVision, and WordPress. Experienced in photography, video editing, data visualisation, and CMS management. Holds an MSc in Management with Digital Marketing.</p>
           </div>
 
-          <!-- Experience -->
           <div class="cv-block reveal">
             <h3 class="cv-section-title">Work Experience</h3>
             <div class="cv-timeline">
@@ -179,7 +420,7 @@
               <div class="cv-entry">
                 <div class="cv-entry-head">
                   <span class="cv-date">Sep 2022 — Present</span>
-                  <h4>Freelance Graphic Designer & Social Media Specialist</h4>
+                  <h4>Freelance Graphic Designer &amp; Social Media Specialist</h4>
                   <span class="cv-company">London, United Kingdom</span>
                 </div>
                 <ul class="cv-list">
@@ -206,51 +447,40 @@
             </div>
           </div>
 
-          <!-- Education -->
           <div class="cv-block reveal">
             <h3 class="cv-section-title">Education</h3>
             <div class="cv-timeline">
               <div class="cv-entry">
                 <div class="cv-entry-head">
                   <span class="cv-date">Graduated Jan 2024</span>
-                  <h4>Master's Degree in Digital Marketing</h4>
+                  <h4>MSc Management with Digital Marketing</h4>
                   <span class="cv-company">BPP University — London</span>
                 </div>
               </div>
               <div class="cv-entry">
                 <div class="cv-entry-head">
                   <span class="cv-date">Graduated Aug 2021</span>
-                  <h4>Master's Degree in Project Management</h4>
+                  <h4>PG Diploma in Project Management</h4>
                   <span class="cv-company">University of Sunderland</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Certifications -->
           <div class="cv-block reveal">
             <h3 class="cv-section-title">Certifications</h3>
             <div class="cv-certs">
               <div class="cv-cert">
                 <span class="cv-cert-year">2025</span>
-                <div>
-                  <h4>Adobe Firefly Essential Training</h4>
-                  <p>LinkedIn Learning</p>
-                </div>
+                <div><h4>Adobe Firefly Essential Training</h4><p>LinkedIn Learning</p></div>
               </div>
               <div class="cv-cert">
                 <span class="cv-cert-year">2025</span>
-                <div>
-                  <h4>Expressive Typography</h4>
-                  <p>LinkedIn Learning</p>
-                </div>
+                <div><h4>Expressive Typography</h4><p>LinkedIn Learning</p></div>
               </div>
               <div class="cv-cert">
                 <span class="cv-cert-year">2024</span>
-                <div>
-                  <h4>Graphic Design Fundamentals</h4>
-                  <p>Edoxi Training Center</p>
-                </div>
+                <div><h4>Graphic Design Fundamentals</h4><p>Edoxi Training Center</p></div>
               </div>
             </div>
           </div>
@@ -267,9 +497,9 @@
       <div class="footer-inner">
         <div class="footer-logo">HP</div>
         <nav class="footer-nav">
-          <a href="behance.html#about">About</a>
-          <a href="behance.html#work">Work</a>
-          <a href="behance.html#contact">Contact</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#work">Work</a>
+          <a href="index.html#contact">Contact</a>
         </nav>
         <span class="footer-copy">© 2025 Harsh Patel. All rights reserved.</span>
       </div>
@@ -296,28 +526,22 @@
     }
 
     // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => observer.observe(el));
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // Skill bar animation
     const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.cv-bar-fill').forEach(bar => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.cv-bar-fill').forEach(bar => {
             bar.style.width = getComputedStyle(bar).getPropertyValue('--w');
           });
-          barObserver.unobserve(entry.target);
+          barObserver.unobserve(e.target);
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.2 });
     document.querySelectorAll('.cv-skills').forEach(s => barObserver.observe(s));
   </script>
 </body>
